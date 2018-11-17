@@ -6,7 +6,7 @@ class Sensor {
    constructor(type)
    {
       this.id = Guid.raw();
-      this.type = "sensor.led";
+      this.type = type;
       this.actions = [];
    }
    addAction(actionName)

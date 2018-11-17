@@ -4,7 +4,7 @@ var hwidHelper = require('./uniqueIdHelper.js');
 
 function generateHwid()
 {
-   var h_id = ""
+   var h_id = "4242"
    hwidHelper()
    .then((id) => {
      h_id = id
@@ -20,7 +20,6 @@ class Device {
    {
       this.version = "1.0";
       this.hw_id = generateHwid();
-      console.log(this.hw_id);
       this.sensors = [];
       this.deviceActions = [];
       this.name = deviceName;
