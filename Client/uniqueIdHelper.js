@@ -11,7 +11,7 @@ function getUniqueId()
       {
       exec("cat /proc/cpuinfo", (error, stdout, stderr) => {
         var cpuInfo = stdout.split(os.EOL);
-        var serialValue = "4242"
+        var serialValue = "5555"
         //cpuInfo[cpuInfo.length - 2].split(":")[1].trim();
         resultSeriaValue = serialValue;
         //console.log(serialValue);
