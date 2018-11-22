@@ -2,33 +2,36 @@ const Action = require('./action.js');
 const Sensor = require('./sensor.js');
 var hwidHelper = require('./uniqueIdHelper.js');
 
-function generateHwid()
-{
-   var h_id = "4242"
-   hwidHelper()
-   .then((id) => {
-     h_id = id
-   })
-   .catch((err) => {
-     console.log(err)
-   })
-   return h_id;
-}
 class Device {
 
    constructor(deviceName)
    {
       this.version = "1.0";
-      this.hw_id = generateHwid();
+      this.hw_id = "";
       this.sensors = [];
       this.deviceActions = [];
       this.name = deviceName;
    }
-
-   addSensor(type)
+   init()
    {
-      var newSensor = new Sensor(type);
-      this.sensors.push(newSensor);
+      return new Promise((resolve, reject) => {
+         hwidHelper()
+         .then((id) => {
+           this.hw_id = id;
+           resolve();
+         })
+         .catch((err) => {
+           this.hw_id = "";
+           console.log(err)
+           reject();
+         })
+
+      })
+   }
+   //
+   addSensor(sensor)
+   {
+      this.sensors.push(sensor);
    }
    addAction(actionName)
    {

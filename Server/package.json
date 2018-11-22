@@ -4,16 +4,15 @@
   "description": "",
   "main": "HttpServer.js",
   "dependencies": {
-    "bluebird": "x",
-    "event-emitter": "^0.3.5",
-    "events": "2",
     "express": "^4.16.4",
-    "guid": "x",
     "mqtt": "^2.18.8",
     "node-dht-sensor": "0.0.34",
     "onoff": "^3.2.2",
     "pug": "^2.0.3",
-    "pug-bootstrap": "0.0.15"
+    "pug-bootstrap": "0.0.15",
+    "events": "2",
+    "bluebird": "x",
+    "guid": "x"
   },
   "devDependencies": {},
   "scripts": {
