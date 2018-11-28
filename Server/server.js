@@ -34,11 +34,7 @@ broker.on('message', function (topic, message) {
          console.log("Send it:");
          console.log(response_message);
          console.log();
-         broker.publish('response_' + json.data.hw_id,JSON.stringify(response_message) );
-      }
-   }
-   if (topic == "sensor_changed")
-   {
+         broker.publish('dev_' + messageFromRaspberry.data.hw_id, JSON.stringify(response_message) );
+      }}
 
-   }
 })

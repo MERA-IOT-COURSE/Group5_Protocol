@@ -9,14 +9,18 @@ class MoutionSensor extends Sensor{
    {
       super("sensor.moution");
    }
-   getCurValue()
+   emitData(topic, data)
    {
+      this.emit(topic, data);
+   }
+   subscribeToChanges()
+   {
+      var action = this;
       var data = {
-         "sensor_id" : this.id,
-         "value" : "qwertyValue",
-         "ts" : new Date()
+         "sensor_id" : undefined,
+         "value" : undefined,
+         "ts" : undefined
       }
-
       Moution.watch(function() {
          var intResult = Moution.readSync();
          console.log(intResult);
@@ -24,36 +28,13 @@ class MoutionSensor extends Sensor{
          console.log(result);
          if (result)
             {
-               data.value = result;
-               this.emit('sensorChanged', data);
-               Moution.unwatch();
-               return;
+               data.sensor_id = action.id;
+               data.value = "MoutionDetected";
+               data.ts = Math.floor(new Date() / 1000);
+               action.emit("sensorChanged", data);
             }
       });
-
-
-
-   }
-   /*
-   getValue()
-   {
-
-      Moution.watch(function() {
-            var intResult = Moution.readSync();
-            console.log(intResult);
-            var result = Boolean(intResult);
-            console.log(result);
-            if (result)
-            {
-               this.value = result;
-               this.emit('moutionChanged',this, this.value);
-               Moution.unwatch();
-            }
-         });
-
-
 }
-*/
 
    getDataObj()
    {

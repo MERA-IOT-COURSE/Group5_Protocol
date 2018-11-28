@@ -1,8 +1,8 @@
 var mqtt = require('mqtt');
 
-var client = mqtt.connect('http://127.0.0.1:5051');
+//var client = mqtt.connect('http://127.0.0.1:5051');
 //For Mera Classes
-//var client = mqtt.connect('htpp://10.42.0.10:1883');
+var client = mqtt.connect('htpp://10.42.0.10:1883');
 
 //Sensors
 var MoutionSensor = require('./sensors/moutionSensor.js');
@@ -28,7 +28,7 @@ device.init().then(() => {
    msg.data = device.getDevice();
    console.log('Connected');
    client.on('connect', function () {
-     client.subscribe('response_' + msg.data.hw_id, function (err) {
+     client.subscribe('dev_' + device.hw_id, function (err) {
        if (!err) {
          console.log(process.platform);
          var strMessage = JSON.stringify(msg);
@@ -48,17 +48,17 @@ device.init().then(() => {
      console.log();
      client.end()
    })
-})
 */
-var sensorType = "sensor.moution";
-console.log(device.sensors[0]);
-device.sensors[0].on('sensorChanged', function(data)    {
-   msg.mid = "SENSOR_DATA";
-   msg.data = data;
-   var strMessage = JSON.stringify(msg);
-   client.publish('sensor_changed', strMessage)
-})
-device.sensors[0].getCurValue();
+   var defaultSensor = device.sensors[0];
 
+   console.log(defaultSensor);
+   defaultSensor.on('sensorChanged', function(data)    {
+      msg.mid = "SENSOR_DATA";
+      msg.data = data;
+      var strMessage = JSON.stringify(msg);
+      console.log(msg);
+      client.publish('be_' + device.hw_id, strMessage)
+   });
 
+   defaultSensor.subscribeToChanges();
 })
