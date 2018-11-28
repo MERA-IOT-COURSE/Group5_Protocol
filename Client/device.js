@@ -7,7 +7,7 @@ class Device {
    constructor(deviceName)
    {
       this.version = "1.0";
-      this.hw_id = "";
+      this.hw_id = "12345";
       this.sensors = [];
       this.deviceActions = [];
       this.name = deviceName;
@@ -21,9 +21,9 @@ class Device {
            resolve();
          })
          .catch((err) => {
-           this.hw_id = "";
-           console.log(err)
-           reject();
+           this.hw_id = "12345";
+           //console.log(err)
+           resolve();
          })
 
       })

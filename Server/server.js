@@ -15,6 +15,7 @@ broker.on('connect', function () {
      {
      }
 });
+broker.subscribe('sensor_changed');
 });
 
 broker.on('message', function (topic, message) {
@@ -23,15 +24,21 @@ broker.on('message', function (topic, message) {
    messageFromRaspberry = json;
    console.log("got it:");
    console.log(messageFromRaspberry);
-   if (json.data.hw_id!= "")
+   if (topic == "init_master")
    {
-      response_message.hw_id = json.data.hw_id;
-      response_message.response_status = "SuccessfullyConnected";
-      console.log();
-      console.log("Send it:");
-      console.log(response_message);
-      console.log();
-      broker.publish('response_' + json.data.hw_id.toString(),JSON.stringify(response_message) );
+   if (json.data.hw_id!= "")
+      {
+         response_message.hw_id = json.data.hw_id;
+         response_message.response_status = "SuccessfullyConnected";
+         console.log();
+         console.log("Send it:");
+         console.log(response_message);
+         console.log();
+         broker.publish('response_' + json.data.hw_id,JSON.stringify(response_message) );
+      }
    }
+   if (topic == "sensor_changed")
+   {
 
+   }
 })

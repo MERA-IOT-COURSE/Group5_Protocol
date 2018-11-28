@@ -7,6 +7,8 @@ function getUniqueId()
 {
       console.log("promise");
       return new Promise((resolve, reject) => {
+         resolve("qwertyID");
+         return;
       exec("cat /proc/cpuinfo", (error, stdout, stderr) => {
         var cpuInfo = stdout.split(os.EOL);
         var serialValue = cpuInfo[cpuInfo.length - 2].split(":")[1].trim();

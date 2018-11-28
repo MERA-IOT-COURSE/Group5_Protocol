@@ -1,4 +1,3 @@
-
 var gpio = require('onoff').Gpio;
 var Moution = new gpio(18, 'in', 'both');
 var Sensor = new require('./../sensor.js');
@@ -6,6 +5,36 @@ var Sensor = new require('./../sensor.js');
 
 class MoutionSensor extends Sensor{
 
+   constructor()
+   {
+      super("sensor.moution");
+   }
+   getCurValue()
+   {
+      var data = {
+         "sensor_id" : this.id,
+         "value" : "qwertyValue",
+         "ts" : new Date()
+      }
+
+      Moution.watch(function() {
+         var intResult = Moution.readSync();
+         console.log(intResult);
+         var result = Boolean(intResult);
+         console.log(result);
+         if (result)
+            {
+               data.value = result;
+               this.emit('sensorChanged', data);
+               Moution.unwatch();
+               return;
+            }
+      });
+
+
+
+   }
+   /*
    getValue()
    {
 
@@ -24,14 +53,10 @@ class MoutionSensor extends Sensor{
 
 
 }
+*/
 
    getDataObj()
    {
-      var data = {
-         "sensor_id" : undefined,
-         "value" : undefined,
-         "ts" : undefined
-      }
 
       data.sensor_id = this.id;
       data.value = "";
@@ -41,5 +66,5 @@ class MoutionSensor extends Sensor{
    }
 
 }
-getValue();
+//getValue();
 module.exports = MoutionSensor;

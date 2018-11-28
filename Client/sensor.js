@@ -1,11 +1,12 @@
 const Guid = require('guid');
 const Action = require('./action.js')
-const EventEmmiter = require('event-emitter');
+const EventEmmiter = require('events').EventEmitter;
 
 class Sensor extends EventEmmiter {
 
-   constructor(type, func)
+   constructor(type)
    {
+      super();
       this.id = Guid.raw();
       this.type = type;
       this.actions = [];

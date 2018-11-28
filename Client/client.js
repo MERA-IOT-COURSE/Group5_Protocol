@@ -21,6 +21,8 @@ device.init().then(() => {
 
    var moutionSensor = new MoutionSensor("sensor.moution");
    device.addSensor(moutionSensor);
+   moutionSensor.addAction("b");
+   console.log(device.sensors[0].actions);
    device.sensors[0].addAction("common.read");
 
    msg.data = device.getDevice();
@@ -49,11 +51,14 @@ device.init().then(() => {
 })
 */
 var sensorType = "sensor.moution";
-msg.mid = "SENSOR_DATA";
-msg.data = device.sensors[0].getValue();
-device.on()
+console.log(device.sensors[0]);
+device.sensors[0].on('sensorChanged', function(data)    {
+   msg.mid = "SENSOR_DATA";
+   msg.data = data;
+   var strMessage = JSON.stringify(msg);
+   client.publish('sensor_changed', strMessage)
+})
+device.sensors[0].getCurValue();
 
-
-console.log(msg);
 
 })
